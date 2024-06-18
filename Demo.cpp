@@ -136,52 +136,95 @@
 using namespace std;
 
 int main() {
-    
-    Node<double> root_node(1.1);
-    Tree<double> tree; // Binary tree that contains doubles.
-    tree.add_root(root_node);
+    // check int tree
+    Node<int> root_node1(1);
+    Tree<int> tree1; // Binary tree that contains doubles.
+    tree1.add_root(root_node1);
 
-    Node<double> n1(1.2);
-    Node<double> n2(1.3);
-    Node<double> n3(1.4);
-    Node<double> n4(1.5);
-    Node<double> n5(1.6);
+    Node<int> n1(2);
+    Node<int> n2(3);
+    Node<int> n3(4);
+    Node<int> n4(5);
+    Node<int> n5(6);
 
-    tree.add_sub_node(root_node, n1);
-    tree.add_sub_node(root_node, n2);
-    tree.add_sub_node(n1, n3);
-    tree.add_sub_node(n1, n4);
-    tree.add_sub_node(n2, n5);
+    tree1.add_sub_node(root_node1, n1);
+    tree1.add_sub_node(root_node1, n2);
+    tree1.add_sub_node(n1, n3);
+    tree1.add_sub_node(n1, n4);
+    tree1.add_sub_node(n2, n5);
 
     // Draw the tree
-    // std::cout << tree;
+    std::cout << tree1;
+    
+    // check doubel tree
+    Node<double> root_node2(1.1);
+    Tree<double> tree2; // Binary tree that contains doubles.
+    tree2.add_root(root_node2);
+
+    Node<double> node1(1.2);
+    Node<double> node2(1.3);
+    Node<double> node3(1.4);
+    Node<double> node4(1.5);
+    Node<double> node5(1.6);
+
+    tree2.add_sub_node(root_node2, node1);
+    tree2.add_sub_node(root_node2, node2);
+    tree2.add_sub_node(node1, node3);
+    tree2.add_sub_node(node1, node4);
+    tree2.add_sub_node(node2, node5);
+
+    // Draw the tree
+    std::cout << tree2;
 
     // check of complex tree
-    Tree<Complex> tree2;
+    Tree<Complex> tree3;
 
     Node <Complex> root(Complex(1.0, 2.0));
     Node<Complex> child1(Complex(3.0, 4.0));
     Node<Complex> child2(Complex(5.0, 6.0));
+    Node<Complex> child3(Complex(2.0, 6.0));
+    Node<Complex> child4(Complex(4.0, 6.0));
 
-    tree2.add_root(root);
-    tree2.add_sub_node(root, child1);
-    tree2.add_sub_node(root, child2);
+    tree3.add_root(root);
+    tree3.add_sub_node(root, child1);
+    tree3.add_sub_node(root, child2);
+    tree3.add_sub_node(child2, child3);
+    tree3.add_sub_node(child1, child4);
+    std::cout << tree3;
 
-    std::cout << tree2;
+    // check for string tree
+    // Node<string> root_node4("hi");
+    // Tree<string> tree4; // Binary tree that contains doubles.
+    // tree4.add_root(root_node4);
 
-    // check for doubel tree
-    // Tree<double> tree1;
+    // Node<string> nodeS1("r");
+    // Node<string> nodeS2("d");
+    // Node<string> nodeS3("ff");
+    // Node<string> nodeS4("sc");
+    // Node<string> nodeS5("ff");
 
-    // // Create nodes
-    // // auto root = std::make_shared<Node<double>>(1.2);
-    // auto child1 = std::make_shared<Node<double>>(2.3);
-    // auto child2 = std::make_shared<Node<double>>(3.4);
+    // tree4.add_sub_node(root_node4, nodeS1);
+    // tree4.add_sub_node(root_node4, nodeS2);
+    // tree4.add_sub_node(nodeS1, nodeS3);
+    // tree4.add_sub_node(nodeS1, nodeS4);
+    // tree4.add_sub_node(nodeS2, nodeS5);
 
-    // // Build tree structure
-    // root->add_child(child1);
-    // root->add_child(child2);
-    // tree1.add_root(*root);
+    // Create a tree with k = 3 children
+    Node<std::string> root_node4("root");
+    Tree<std::string, 3> tree4;
+    tree4.add_root(root_node4);
 
-    // std::cout << tree1;
+    Node<std::string> nodeS1("child1");
+    Node<std::string> nodeS2("child2");
+    Node<std::string> nodeS3("child3");
+    Node<std::string> nodeS4("child4");
+
+    tree4.add_sub_node(root_node4, nodeS1);
+    tree4.add_sub_node(root_node4, nodeS2);
+    tree4.add_sub_node(root_node4, nodeS3);
+    tree4.add_sub_node(nodeS1, nodeS4);
+
+    // Draw the tree
+    std::cout << tree4;
     return 0;
 }

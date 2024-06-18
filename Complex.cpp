@@ -1,8 +1,11 @@
 // ID: 208018028, Mail: ronimordechai70@gmail.com
 #include "Complex.hpp"
 #include <cmath>
-#include <sstream>
+#include "Complex.hpp"
+#include <cmath>
+#include <iostream>
 #include <iomanip>
+#include <sstream>
 
 // Constructor
 Complex::Complex(double r, double i) : real(r), imag(i) {}
@@ -38,13 +41,15 @@ bool Complex::operator!=(const Complex& other) const {
     return !(*this == other);
 }
 
-// toString for complex
-std::string Complex::to_string() const {
+// toString
+std::string Complex::toString() const {
     std::ostringstream oss;
-    oss << std::fixed << std::setprecision(2) << real;
-    if (imag >= 0)
-        oss << " + " << std::fixed << std::setprecision(2) << imag << "i";
-    else
-        oss << " - " << std::fixed << std::setprecision(2) << -imag << "i";
+    oss << std::fixed << std::setprecision(2); // Set precision here
+    oss << real;
+    if (imag >= 0) {
+        oss << " + " << imag << "i";
+    } else {
+        oss << " - " << -imag << "i";
+    }
     return oss.str();
 }

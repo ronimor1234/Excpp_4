@@ -42,5 +42,3 @@ std::string toString(const T& value) {
 }
 
 #endif // NODE_HPP
-
-

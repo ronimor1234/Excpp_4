@@ -2,6 +2,7 @@
 #ifndef COMPLEX_HPP
 #define COMPLEX_HPP
 #include <string>
+#include <iostream>
 
 class Complex {
 public:
@@ -17,8 +18,7 @@ public:
 
     bool operator==(const Complex& other) const;
     bool operator!=(const Complex& other) const;
-    std::string to_string() const;
+    std::string toString() const;
 };
 
 #endif // COMPLEX_HPP
-

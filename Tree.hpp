@@ -108,7 +108,11 @@ private:
 
         sf::Text text;
         text.setFont(font);
-        text.setString(node->value.to_string());
+        // text.setString(node->value.toString());
+
+        setText(text, node->value);
+
+
         text.setCharacterSize(10);
         text.setFillColor(sf::Color::Black);
         
@@ -147,9 +151,34 @@ private:
             }
         }
     }
+
+    private:
+    // Helper function to set text based on type
+    static void setText(sf::Text& text, const T& value) {
+        std::ostringstream oss;
+        setTextHelper(oss, value);
+        text.setString(oss.str());
+    }
+
+    // SFINAE helper function to handle different types
+    template <typename U = T>
+    static typename std::enable_if<std::is_same<U, double>::value || std::is_same<U, int>::value, void>::type
+    setTextHelper(std::ostringstream& oss, const T& value) {
+        oss << value;
+    }
+
+    template <typename U = T>
+    static typename std::enable_if<std::is_same<U, std::string>::value, void>::type
+    setTextHelper(std::ostringstream& oss, const T& value) {
+        oss << value;
+    }
+
+    template <typename U = T>
+    static typename std::enable_if<!std::is_same<U, double>::value && !std::is_same<U, int>::value && !std::is_same<U, std::string>::value, void>::type
+    setTextHelper(std::ostringstream& oss, const T& value) {
+        oss << value.toString();
+    }
     
 };
 
 #endif // TREE_HPP
-
-
