@@ -31,33 +31,94 @@ public:
         return root;
     }
 
-    // PreOrderIterator class
-    class PreOrderIterator {
-    private:
-        std::stack<std::shared_ptr<Node<T>>> stack;
+    // InOrderIterator class
+    /*
+    * Visit the left subtree.
+    * Visit the root node.
+    * Visit the right subtree.
+    */
+    class InOrderIterator {
+        private:
+            std::stack<std::shared_ptr<Node<T>>> stack;
 
-    public:
-        PreOrderIterator(std::shared_ptr<Node<T>> root) {
-            if (root) stack.push(root);
-        }
-
-        bool operator!=(const PreOrderIterator& other) const {
-            return !stack.empty() || !other.stack.empty();
-        }
-
-        PreOrderIterator& operator++() {
-            auto node = stack.top();
-            stack.pop();
-            for (auto it = node->children.rbegin(); it != node->children.rend(); ++it) {
-                stack.push(*it);
+            void push_left_chain(std::shared_ptr<Node<T>> node) {
+                while (node) {
+                    stack.push(node);
+                    node = node->children.size() > 0 ? node->children[0] : nullptr;
+                }
             }
-            return *this;
-        }
 
-        std::shared_ptr<Node<T>> operator*() const {
-            return stack.top();
-        }
-    };
+        public:
+            InOrderIterator(std::shared_ptr<Node<T>> root) {
+                push_left_chain(root);
+            }
+
+            bool operator!=(const InOrderIterator& other) const {
+                return !stack.empty() || !other.stack.empty();
+            }
+
+            InOrderIterator& operator++() {
+                if (!stack.empty()) {
+                    auto node = stack.top();
+                    stack.pop();
+                    push_left_chain(node->children.size() > 1 ? node->children[1] : nullptr);
+                }
+                return *this;
+            }
+
+            Node<T>& operator*() const {
+            return *stack.top();
+            }
+
+            Node<T>* operator->() const {
+            return stack.top().get();
+            }
+        };
+
+    InOrderIterator begin_in_order() const {
+        return InOrderIterator(root);
+    }
+
+    InOrderIterator end_in_order() const {
+        return InOrderIterator(nullptr);
+    }
+
+    // PreOrderIterator class
+    /*
+    * Visit the root subtree.
+    * Visit the left node.
+    * Visit the right subtree.
+    */
+    class PreOrderIterator {
+        private:
+            std::stack<std::shared_ptr<Node<T>>> stack;
+
+        public:
+            PreOrderIterator(std::shared_ptr<Node<T>> root) {
+                if (root) stack.push(root);
+            }
+
+            bool operator!=(const PreOrderIterator& other) const {
+                return !stack.empty() || !other.stack.empty();
+            }
+
+            PreOrderIterator& operator++() {
+                auto node = stack.top();
+                stack.pop();
+                for (auto it = node->children.rbegin(); it != node->children.rend(); ++it) {
+                    stack.push(*it);
+                }
+                return *this;
+            }
+
+            Node<T>& operator*() const {
+                return *stack.top();
+            }
+
+            Node<T>* operator->() const {
+                return stack.top().get();
+            }
+        };
 
     PreOrderIterator begin_pre_order() const {
         return PreOrderIterator(root);
@@ -67,9 +128,78 @@ public:
         return PreOrderIterator(nullptr);
     }
 
+    // PostOrderIterator class
+    /*
+    * Visit the left subtree.
+    * Visit the right node.
+    * Visit the root subtree.
+    */
+    class PostOrderIterator {
+        private:
+            std::stack<std::shared_ptr<Node<T>>> stack;
+
+        public:
+            PostOrderIterator(std::shared_ptr<Node<T>> root) {
+            if (root) {
+                stack.push(root);
+                // Initialize the stack with the entire left spine
+                auto current = root;
+                while (!current->children.empty()) {
+                    stack.push(current->children.back());
+                    current = current->children.back();
+                }
+            }
+        }
+
+        bool operator!=(const PostOrderIterator& other) const {
+            return !stack.empty() || !other.stack.empty();
+        }
+
+        PostOrderIterator& operator++() {
+            auto node = stack.top();
+            stack.pop();
+            if (!stack.empty()) {
+            auto parent = stack.top();
+            // Find the next child to push to the stack
+            auto it = std::find_if(parent->children.rbegin(), parent->children.rend(),
+                                   [&](const std::shared_ptr<Node<T>>& n) {
+                                       return n == node;
+                                   });
+            // Push the next child onto the stack
+            if (++it != parent->children.rend()) {
+                auto current = *it;
+                stack.push(current);
+                // Push the entire left spine onto the stack
+                while (!current->children.empty()) {
+                    stack.push(current->children.back());
+                    current = current->children.back();
+                    }
+                }
+            }
+            return *this;
+        }
+
+        Node<T>& operator*() const {
+            return *stack.top();
+        }
+
+        Node<T>* operator->() const {
+            return stack.top().get();
+        }
+    };
+
+    PostOrderIterator begin_post_order() const {
+        return PostOrderIterator(root);
+    }
+
+    PostOrderIterator end_post_order() const {
+        return PostOrderIterator(nullptr);
+    }
+
+
     // Implement PostOrderIterator, InOrderIterator, BFSIterator, DFSIterator...
     friend std::ostream& operator<<(std::ostream& os, const Tree<T, K>& tree) {
-        sf::RenderWindow window(sf::VideoMode(800, 600), "Tree Visualization");
+        sf::RenderWindow window(sf::VideoMode(1200, 800), "Tree Visualization");
 
         while (window.isOpen()) {
             sf::Event event;

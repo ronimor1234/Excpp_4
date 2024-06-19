@@ -155,7 +155,25 @@ int main() {
 
     // Draw the tree
     std::cout << tree1;
-    
+
+    cout << "The in-order of tree1 is:" <<endl;
+    for (auto node_iter1 = tree1.begin_in_order(); node_iter1 != tree1.end_in_order(); ++node_iter1)
+    {
+        cout << node_iter1->get_value() << endl;
+    }
+
+    cout << "The pre-order of tree1 is:" << endl;
+    for (auto node_iter2 = tree1.begin_pre_order(); node_iter2 != tree1.end_pre_order(); ++node_iter2)
+    {
+        cout << node_iter2->get_value() << endl;
+    }
+
+    cout << "The post-order of tree1 is:" << endl;
+    for (auto node_iter3 = tree1.begin_post_order(); node_iter3 != tree1.end_post_order(); ++node_iter3)
+    {
+        cout << node_iter3->get_value() << endl;
+    }
+
     // check doubel tree
     Node<double> root_node2(1.1);
     Tree<double> tree2; // Binary tree that contains doubles.
@@ -210,14 +228,14 @@ int main() {
     // tree4.add_sub_node(nodeS2, nodeS5);
 
     // Create a tree with k = 3 children
-    Node<std::string> root_node4("root");
-    Tree<std::string, 3> tree4;
+    Node<string> root_node4("root");
+    Tree<string, 3> tree4;
     tree4.add_root(root_node4);
 
-    Node<std::string> nodeS1("child1");
-    Node<std::string> nodeS2("child2");
-    Node<std::string> nodeS3("child3");
-    Node<std::string> nodeS4("child4");
+    Node<string> nodeS1("child1");
+    Node<string> nodeS2("child2");
+    Node<string> nodeS3("child3");
+    Node<string> nodeS4("child4");
 
     tree4.add_sub_node(root_node4, nodeS1);
     tree4.add_sub_node(root_node4, nodeS2);
@@ -226,5 +244,36 @@ int main() {
 
     // Draw the tree
     std::cout << tree4;
+
+    // Create a tree with k = 5 children
+    Node<int> root_node5(1);
+    Tree<int, 5> tree5;
+    tree5.add_root(root_node5);
+
+    Node<int> node5_1(11);
+    Node<int> node5_2(12);
+    Node<int> node5_3(13);
+    Node<int> node5_4(14);
+    Node<int> node5_5(15);
+
+    tree5.add_sub_node(root_node5, node5_1);
+    tree5.add_sub_node(root_node5, node5_2);
+    tree5.add_sub_node(root_node5, node5_3);
+    tree5.add_sub_node(root_node5, node5_4);
+    tree5.add_sub_node(root_node5, node5_5);
+
+    Node<int> node5_6(21);
+    tree5.add_sub_node(node5_1, node5_6);
+
+    // Add more children to node5_1
+    Node<int> node5_7(22);
+    Node<int> node5_8(23);
+
+    tree5.add_sub_node(node5_1, node5_7);
+    tree5.add_sub_node(node5_1, node5_8);
+
+    // Draw the tree
+    std::cout << tree5;
+
     return 0;
 }
