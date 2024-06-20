@@ -3,6 +3,7 @@
 #define COMPLEX_HPP
 #include <string>
 #include <iostream>
+#include <iomanip>
 
 class Complex {
 public:
@@ -19,6 +20,7 @@ public:
     bool operator==(const Complex& other) const;
     bool operator!=(const Complex& other) const;
     std::string toString() const;
+    friend std::ostream& operator<<(std::ostream& os, const Complex& value);
 };
 
 #endif // COMPLEX_HPP

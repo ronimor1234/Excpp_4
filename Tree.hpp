@@ -1,13 +1,14 @@
 // ID: 208018028, Mail: ronimordechai70@gmail.com
 #ifndef TREE_HPP
 #define TREE_HPP
-
+#include "Complex.hpp"
 #include "Node.hpp"
 #include <queue>
 #include <stack>
 #include <iterator>
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <type_traits>
 
 template <typename T, int K = 2>
 class Tree {
@@ -182,6 +183,7 @@ public:
         std::cout << std::endl;
     }
 
+
     // Template specialization for k != 2 (non-binary tree)
     void in_order_traversal_impl(std::false_type) {
         std::cout << "In-order traversal is not suitable for non-binary trees; performing DFS traversal from the root:" << std::endl;
@@ -190,6 +192,7 @@ public:
         }
         std::cout << std::endl;
     }
+
 
     // PreOrderIterator class
     /*
@@ -448,7 +451,7 @@ private:
         text.setString(oss.str());
     }
 
-    // SFINAE helper function to handle different types
+    // SFINAE (Substitution Failure Is Not An Error) helper function to handle different types
     template <typename U = T>
     static typename std::enable_if<std::is_same<U, double>::value || std::is_same<U, int>::value, void>::type
     setTextHelper(std::ostringstream& oss, const T& value) {
@@ -466,6 +469,12 @@ private:
     setTextHelper(std::ostringstream& oss, const T& value) {
         oss << value.toString();
     }
+
+    // Specialization for Complex
+    static void setTextHelper(std::ostringstream& oss, const Complex& value) {
+        oss << value.toString();
+    }
+
     
 };
 

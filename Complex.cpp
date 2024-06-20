@@ -53,3 +53,9 @@ std::string Complex::toString() const {
     }
     return oss.str();
 }
+
+// Overload operator<< to output Complex objects
+std::ostream& operator<<(std::ostream& os, const Complex& value) {
+    os << "(" << value.real << ", " << value.imag << "i)";
+    return os;
+}
