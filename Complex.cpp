@@ -11,35 +11,35 @@
 Complex::Complex(double r, double i) : real(r), imag(i) {}
 
 // Addition
-Complex Complex::operator+(const Complex& other) const {
-    return Complex(real + other.real, imag + other.imag);
-}
+// Complex Complex::operator+(const Complex& other) const {
+//     return Complex(real + other.real, imag + other.imag);
+// }
 
-// Subtraction
-Complex Complex::operator-(const Complex& other) const {
-    return Complex(real - other.real, imag - other.imag);
-}
+// // Subtraction
+// Complex Complex::operator-(const Complex& other) const {
+//     return Complex(real - other.real, imag - other.imag);
+// }
 
-// Multiplication
-Complex Complex::operator*(const Complex& other) const {
-    return Complex(real * other.real - imag * other.imag, real * other.imag + imag * other.real);
-}
+// // Multiplication
+// Complex Complex::operator*(const Complex& other) const {
+//     return Complex(real * other.real - imag * other.imag, real * other.imag + imag * other.real);
+// }
 
-// Division
-Complex Complex::operator/(const Complex& other) const {
-    double denom = other.real * other.real + other.imag * other.imag;
-    return Complex((real * other.real + imag * other.imag) / denom, (imag * other.real - real * other.imag) / denom);
-}
+// // Division
+// Complex Complex::operator/(const Complex& other) const {
+//     double denom = other.real * other.real + other.imag * other.imag;
+//     return Complex((real * other.real + imag * other.imag) / denom, (imag * other.real - real * other.imag) / denom);
+// }
 
 // Equality
 bool Complex::operator==(const Complex& other) const {
     return real == other.real && imag == other.imag;
 }
 
-// Inequality
-bool Complex::operator!=(const Complex& other) const {
-    return !(*this == other);
-}
+// // Inequality
+// bool Complex::operator!=(const Complex& other) const {
+//     return !(*this == other);
+// }
 
 // toString
 std::string Complex::toString() const {

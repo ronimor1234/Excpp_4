@@ -12,14 +12,14 @@ using namespace std;
 
 int main() {
     // check int tree
-    Node<int> root_node1(1);
+    Node<int> root_node1(10);
     Tree<int> tree1;
     tree1.add_root(root_node1);
 
     Node<int> n1(2);
-    Node<int> n2(3);
+    Node<int> n2(8);
     Node<int> n3(4);
-    Node<int> n4(5);
+    Node<int> n4(7);
     Node<int> n5(6);
 
     tree1.add_sub_node(root_node1, n1);
@@ -29,7 +29,7 @@ int main() {
     tree1.add_sub_node(n2, n5);
 
     // Draw the tree
-    std::cout << tree1;
+    cout << tree1;
 
     // Perform post\in\pre-order traversal
     tree1.post_order_traversal();
@@ -48,14 +48,18 @@ int main() {
     }
     cout<< "\n" << endl;
 
+    // check the convert to min heap
+    tree1.transform_to_min_heap();
+    cout << tree1;
+
     // check doubel tree
-    Node<double> root_node2(1.1);
+    Node<double> root_node2(2.1);
     Tree<double> tree2; 
     tree2.add_root(root_node2);
 
-    Node<double> node1(1.2);
+    Node<double> node1(6.2);
     Node<double> node2(1.3);
-    Node<double> node3(1.4);
+    Node<double> node3(4.4);
     Node<double> node4(1.5);
     Node<double> node5(1.6);
 
@@ -66,11 +70,15 @@ int main() {
     tree2.add_sub_node(node2, node5);
 
     // Draw the tree
-    std::cout << tree2;
+    cout << tree2;
 
     tree2.post_order_traversal();
     tree2.in_order_traversal();
     tree2.pre_order_traversal();
+    tree2.transform_to_min_heap();
+
+    // show the tree after it transfrom to heap
+    cout << tree2;
 
     // check of complex tree
     Tree<Complex> tree3;
@@ -86,11 +94,15 @@ int main() {
     tree3.add_sub_node(root, child2);
     tree3.add_sub_node(child2, child3);
     tree3.add_sub_node(child1, child4);
-    std::cout << tree3;
+    cout << tree3;
 
     tree3.post_order_traversal();
     tree3.in_order_traversal();
     tree3.pre_order_traversal();
+    tree3.transform_to_min_heap();
+
+    // show the tree after it transfrom to heap
+    cout << tree3;
 
     // Create a tree with k = 3 children
     Node<string> root_node4("root");
@@ -113,12 +125,13 @@ int main() {
     }
     cout<< "\n" << endl;
 
-    // tree4.pre_order_traversal();
-    // tree4.post_order_traversal();
+    tree4.pre_order_traversal();
+    tree4.post_order_traversal();
+    cout<< "\n" << endl;
     tree4.in_order_traversal();
 
     // Draw the tree
-    std::cout << tree4;
+    cout << tree4;
 
     // Create a tree with k = 5 children
     Node<int> root_node5(1);
@@ -140,6 +153,9 @@ int main() {
     Node<int> node5_6(21);
     tree5.add_sub_node(node5_1, node5_6);
 
+    // check if it is not work and return a warnning that this tree is not binary
+    tree5.transform_to_min_heap();
+
     // Add more children to node5_1
     Node<int> node5_7(22);
     Node<int> node5_8(23);
@@ -147,7 +163,7 @@ int main() {
     tree5.add_sub_node(node5_1, node5_7);
     tree5.add_sub_node(node5_1, node5_8);
 
-    std::cout << tree5;
+    cout << tree5;
 
     cout << "The DFS of tree5 is:" << endl;
     for (auto node_iter6 = tree5.begin_dfs(); node_iter6 != tree5.end_dfs(); ++node_iter6) {
@@ -156,8 +172,34 @@ int main() {
     cout<< "\n" << endl;
     
     tree5.post_order_traversal();
+    cout<< "\n" << endl;
     tree5.in_order_traversal();
     tree5.pre_order_traversal();
+
+
+    // binary string tree
+    Node<string> root_node6("root");
+    Tree<string, 2> tree6;
+    tree6.add_root(root_node6);
+
+    Node<string> nodeS1_1("left_child");
+    Node<string> nodeS2_2("right_child");
+    Node<string> nodeS3_3("left_child2");
+    Node<string> nodeS4_4("right_child2");
+
+    tree6.add_sub_node(root_node6, nodeS1_1);
+    tree6.add_sub_node(root_node6, nodeS2_2);
+    tree6.add_sub_node(nodeS1_1, nodeS3_3);
+    tree6.add_sub_node(nodeS1_1, nodeS4_4);  
+
+    // before the convert to heap
+    cout<< tree6;  
+
+    // the compared using their ASCII values
+    tree6.transform_to_min_heap();
+
+    // show the tree after it transfrom to heap
+    cout << tree6;
 
     return 0;
 }

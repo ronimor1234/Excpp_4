@@ -6,9 +6,12 @@
 #include <queue>
 #include <stack>
 #include <iterator>
+#include <set>
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <type_traits>
+#include <algorithm>
+#include <functional> // For std::less
 
 template <typename T, int K = 2>
 class Tree {
@@ -349,6 +352,40 @@ public:
         }
     }
   
+        void transform_to_min_heap() {
+        if (!root) return;
+
+        // Collect all nodes in the tree
+        std::vector<T> values;
+        std::queue<std::shared_ptr<Node<T>>> queue;
+        queue.push(root);
+
+        while (!queue.empty()) {
+            auto node = queue.front();
+            queue.pop();
+            values.push_back(node->get_value());
+            for (auto& child : node->children) {
+                queue.push(child);
+            }
+        }
+
+        // Transform the collected values into a min-heap
+        std::make_heap(values.begin(), values.end(), std::greater<T>());
+
+        // Rebuild the tree in min-heap order
+        queue.push(root);
+        size_t index = 0;
+
+        while (!queue.empty() && index < values.size()) {
+            auto node = queue.front();
+            queue.pop();
+            node->value = values[index++];
+            for (auto& child : node->children) {
+                queue.push(child);
+            }
+        }
+    }
+
 
     // Implement PostOrderIterator, InOrderIterator, BFSIterator, DFSIterator...
     friend std::ostream& operator<<(std::ostream& os, const Tree<T, K>& tree) {
