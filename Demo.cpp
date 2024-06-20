@@ -174,6 +174,16 @@ int main() {
         cout << node_iter3->get_value() << endl;
     }
 
+    cout << "The BFS of tree1 is:" << endl;
+    for (auto node_iter4 = tree1.begin_bfs(); node_iter4 != tree1.end_bfs(); ++node_iter4) {
+        cout << node_iter4->get_value() << endl;
+    }
+
+    cout << "The DFS of tree1is:" << endl;
+    for (auto node_iter5 = tree1.begin_dfs(); node_iter5 != tree1.end_dfs(); ++node_iter5) {
+        cout << node_iter5->get_value() << endl;
+    }
+
     // check doubel tree
     Node<double> root_node2(1.1);
     Tree<double> tree2; // Binary tree that contains doubles.

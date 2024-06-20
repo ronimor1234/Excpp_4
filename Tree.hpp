@@ -14,6 +14,10 @@ class Tree {
 private:
     std::shared_ptr<Node<T>> root;
 
+    bool is_binary() const {
+        return K == 2;
+    }
+
 public:
     Tree() : root(nullptr) {}
 
@@ -29,6 +33,86 @@ public:
 
     std::shared_ptr<Node<T>> get_root() const {
         return root;
+    }
+
+    // BFS Iterator
+    class BFSIterator {
+    private:
+        std::queue<std::shared_ptr<Node<T>>> queue;
+
+    public:
+        BFSIterator(std::shared_ptr<Node<T>> root) {
+            if (root) queue.push(root);
+        }
+
+        bool operator!=(const BFSIterator& other) const {
+            return !queue.empty() || !other.queue.empty();
+        }
+
+        BFSIterator& operator++() {
+            auto node = queue.front();
+            queue.pop();
+            for (auto& child : node->children) {
+                queue.push(child);
+            }
+            return *this;
+        }
+
+        Node<T>& operator*() const {
+            return *queue.front();
+        }
+
+        Node<T>* operator->() const {
+            return queue.front().get();
+        }
+    };
+
+    BFSIterator begin_bfs() const {
+        return BFSIterator(root);
+    }
+
+    BFSIterator end_bfs() const {
+        return BFSIterator(nullptr);
+    }
+
+    // DFS Iterator
+    class DFSIterator {
+    private:
+        std::stack<std::shared_ptr<Node<T>>> stack;
+
+    public:
+        DFSIterator(std::shared_ptr<Node<T>> root) {
+            if (root) stack.push(root);
+        }
+
+        bool operator!=(const DFSIterator& other) const {
+            return !stack.empty() || !other.stack.empty();
+        }
+
+        DFSIterator& operator++() {
+            auto node = stack.top();
+            stack.pop();
+            for (auto it = node->children.rbegin(); it != node->children.rend(); ++it) {
+                stack.push(*it);
+            }
+            return *this;
+        }
+
+        Node<T>& operator*() const {
+            return *stack.top();
+        }
+
+        Node<T>* operator->() const {
+            return stack.top().get();
+        }
+    };
+
+    DFSIterator begin_dfs() const {
+        return DFSIterator(root);
+    }
+
+    DFSIterator end_dfs() const {
+        return DFSIterator(nullptr);
     }
 
     // InOrderIterator class
