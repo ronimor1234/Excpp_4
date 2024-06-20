@@ -167,6 +167,30 @@ public:
         return InOrderIterator(nullptr);
     }
 
+    // In-order traversal method
+    void in_order_traversal() {
+        in_order_traversal_impl(std::integral_constant<bool, (K == 2)>());
+    }
+
+
+    // Template specialization for k == 2 (binary tree)
+    void in_order_traversal_impl(std::true_type) {
+        std::cout << "The in-order of the tree is:" << std::endl;
+        for (auto it = begin_in_order(); it != end_in_order(); ++it) {
+            std::cout << it->get_value() << std::endl;
+        }
+        std::cout << std::endl;
+    }
+
+    // Template specialization for k != 2 (non-binary tree)
+    void in_order_traversal_impl(std::false_type) {
+        std::cout << "In-order traversal is not suitable for non-binary trees; performing DFS traversal from the root:" << std::endl;
+        for (auto it = begin_dfs(); it != end_dfs(); ++it) {
+            std::cout << it->get_value() << std::endl;
+        }
+        std::cout << std::endl;
+    }
+
     // PreOrderIterator class
     /*
     * Visit the root subtree.
@@ -212,6 +236,26 @@ public:
         return PreOrderIterator(nullptr);
     }
 
+    // Pre-order traversal method
+    void pre_order_traversal() {
+        pre_order_traversal_impl(std::integral_constant<bool, (K == 2)>());
+    }
+
+    void pre_order_traversal_impl(std::true_type) {
+        std::cout << "The pre-order of the tree is:" << std::endl;
+        for (auto it = begin_pre_order(); it != end_pre_order(); ++it) {
+            std::cout << it->get_value() << std::endl;
+        }
+        std::cout << std::endl;
+    }
+
+    void pre_order_traversal_impl(std::false_type) {
+        std::cout << "Pre-order traversal is not suitable for non-binary trees; performing DFS traversal from the root:" << std::endl;
+        for (auto it = begin_dfs(); it != end_dfs(); ++it) {
+            std::cout << it->get_value() << std::endl;
+        }
+        std::cout << std::endl;
+    }
     // PostOrderIterator class
     /*
     * Visit the left subtree.
@@ -280,6 +324,28 @@ public:
         return PostOrderIterator(nullptr);
     }
 
+    // Post-order traversal method
+    void post_order_traversal() {
+        post_order_traversal_impl(std::integral_constant<bool, (K == 2)>());
+    }
+
+    // Template specialization for k == 2 (binary tree)
+    void post_order_traversal_impl(std::true_type) {
+        std::cout << "The post-order of the tree is:" << std::endl;
+        for (auto it = begin_post_order(); it != end_post_order(); ++it) {
+            std::cout << it->get_value() << std::endl;
+        }
+        std::cout << std::endl;
+    }
+
+    // Template specialization for k != 2 (non-binary tree)
+    void post_order_traversal_impl(std::false_type) {
+        std::cout << "Post-order traversal is not suitable for non-binary trees; performing DFS traversal from the root:" << std::endl;
+        for (auto it = begin_dfs(); it != end_dfs(); ++it) {
+            std::cout << it->get_value() << std::endl;
+        }
+    }
+  
 
     // Implement PostOrderIterator, InOrderIterator, BFSIterator, DFSIterator...
     friend std::ostream& operator<<(std::ostream& os, const Tree<T, K>& tree) {
@@ -344,14 +410,22 @@ private:
         float child_y = y + 100;
         for (auto& child : node->children) {
             if (child) {
-                sf::Vertex line[] =
-                {
-                    sf::Vertex(sf::Vector2f(x + circle.getRadius(), y + circle.getRadius())),
-                    sf::Vertex(sf::Vector2f(child_x + circle.getRadius(), child_y + circle.getRadius()))
-                };
-                window.draw(line, 2, sf::Lines);
-                draw_tree(window, child.get(), child_x, child_y, offset / 2);
-                child_x += offset;
+                 // Calculate line positions
+            float line_x1 = x + circle.getRadius(); // Starting from the bottom center
+            float line_y1 = y + circle.getRadius() * 2;
+
+            float line_x2 = child_x + circle.getRadius(); // Ending at the top center
+            float line_y2 = child_y;
+
+            sf::Vertex line[] =
+            {
+                sf::Vertex(sf::Vector2f(line_x1, line_y1)),
+                sf::Vertex(sf::Vector2f(line_x2, line_y2))
+            };
+            window.draw(line, 2, sf::Lines);
+
+            draw_tree(window, child.get(), child_x, child_y, offset / 2);
+            child_x += offset;
             }
         }
     }
