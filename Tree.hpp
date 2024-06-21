@@ -71,11 +71,11 @@ public:
         }
     };
 
-    BFSIterator begin_bfs() const {
+    BFSIterator begin_bfs_scan() const {
         return BFSIterator(root);
     }
 
-    BFSIterator end_bfs() const {
+    BFSIterator end_bfs_scan() const {
         return BFSIterator(nullptr);
     }
 
@@ -111,11 +111,11 @@ public:
         }
     };
 
-    DFSIterator begin_dfs() const {
+    DFSIterator begin_dfs_scan() const {
         return DFSIterator(root);
     }
 
-    DFSIterator end_dfs() const {
+    DFSIterator end_dfs_scan() const {
         return DFSIterator(nullptr);
     }
 
@@ -190,7 +190,7 @@ public:
     // Template specialization for k != 2 (non-binary tree)
     void in_order_traversal_impl(std::false_type) {
         std::cout << "In-order traversal is not suitable for non-binary trees; performing DFS traversal from the root:" << std::endl;
-        for (auto it = begin_dfs(); it != end_dfs(); ++it) {
+        for (auto it = begin_dfs_scan(); it != end_dfs_scan(); ++it) {
             std::cout << it->get_value() << std::endl;
         }
         std::cout << std::endl;
@@ -257,7 +257,7 @@ public:
 
     void pre_order_traversal_impl(std::false_type) {
         std::cout << "Pre-order traversal is not suitable for non-binary trees; performing DFS traversal from the root:" << std::endl;
-        for (auto it = begin_dfs(); it != end_dfs(); ++it) {
+        for (auto it = begin_dfs_scan(); it != end_dfs_scan(); ++it) {
             std::cout << it->get_value() << std::endl;
         }
         std::cout << std::endl;
@@ -347,13 +347,19 @@ public:
     // Template specialization for k != 2 (non-binary tree)
     void post_order_traversal_impl(std::false_type) {
         std::cout << "Post-order traversal is not suitable for non-binary trees; performing DFS traversal from the root:" << std::endl;
-        for (auto it = begin_dfs(); it != end_dfs(); ++it) {
+        for (auto it = begin_dfs_scan(); it != end_dfs_scan(); ++it) {
             std::cout << it->get_value() << std::endl;
         }
     }
   
-        void transform_to_min_heap() {
+        void myHeap() {
         if (!root) return;
+
+        // Check if the tree is binary
+        if (!is_binary()) {
+            std::cout << "This Tree is not binary: Heap transformation is only supported for binary trees." << std::endl;
+            return;
+        }
 
         // Collect all nodes in the tree
         std::vector<T> values;
@@ -384,6 +390,12 @@ public:
                 queue.push(child);
             }
         }
+        // Print the nodes of the heap in min to max order
+        std::cout << "The Nodes of the Min heap by order:" << std::endl;
+        for (auto& value : values) {
+            std::cout << value << std:: endl;
+        }
+        std::cout << std::endl;
     }
 
 

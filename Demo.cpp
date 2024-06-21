@@ -37,19 +37,19 @@ int main() {
     tree1.pre_order_traversal();
 
     cout << "The BFS of tree1 is:" << endl;
-    for (auto node_iter4 = tree1.begin_bfs(); node_iter4 != tree1.end_bfs(); ++node_iter4) {
+    for (auto node_iter4 = tree1.begin_bfs_scan(); node_iter4 != tree1.end_bfs_scan(); ++node_iter4) {
         cout << node_iter4->get_value() << endl;
     }
     cout<< "\n" << endl;
 
     cout << "The DFS of tree1 is:" << endl;
-    for (auto node_iter5 = tree1.begin_dfs(); node_iter5 != tree1.end_dfs(); ++node_iter5) {
+    for (auto node_iter5 = tree1.begin_dfs_scan(); node_iter5 != tree1.end_dfs_scan(); ++node_iter5) {
         cout << node_iter5->get_value() << endl;
     }
     cout<< "\n" << endl;
 
     // check the convert to min heap
-    tree1.transform_to_min_heap();
+    tree1.myHeap();
     cout << tree1;
 
     // check doubel tree
@@ -75,7 +75,7 @@ int main() {
     tree2.post_order_traversal();
     tree2.in_order_traversal();
     tree2.pre_order_traversal();
-    tree2.transform_to_min_heap();
+    tree2.myHeap();
 
     // show the tree after it transfrom to heap
     cout << tree2;
@@ -99,7 +99,7 @@ int main() {
     tree3.post_order_traversal();
     tree3.in_order_traversal();
     tree3.pre_order_traversal();
-    tree3.transform_to_min_heap();
+    tree3.myHeap();
 
     // show the tree after it transfrom to heap
     cout << tree3;
@@ -120,7 +120,7 @@ int main() {
     tree4.add_sub_node(nodeS1, nodeS4);
 
     cout << "The DFS of tree4 is:" << endl;
-    for (auto node_iter1 = tree4.begin_dfs(); node_iter1 != tree4.end_dfs(); ++node_iter1) {
+    for (auto node_iter1 = tree4.begin_dfs_scan(); node_iter1 != tree4.end_dfs_scan(); ++node_iter1) {
         cout << node_iter1->get_value() << endl;
     }
     cout<< "\n" << endl;
@@ -154,7 +154,8 @@ int main() {
     tree5.add_sub_node(node5_1, node5_6);
 
     // check if it is not work and return a warnning that this tree is not binary
-    tree5.transform_to_min_heap();
+    tree5.myHeap();
+    cout<< "\n" << endl;
 
     // Add more children to node5_1
     Node<int> node5_7(22);
@@ -166,7 +167,7 @@ int main() {
     cout << tree5;
 
     cout << "The DFS of tree5 is:" << endl;
-    for (auto node_iter6 = tree5.begin_dfs(); node_iter6 != tree5.end_dfs(); ++node_iter6) {
+    for (auto node_iter6 = tree5.begin_dfs_scan(); node_iter6 != tree5.end_dfs_scan(); ++node_iter6) {
         cout << node_iter6->get_value() << endl;
     }
     cout<< "\n" << endl;
@@ -196,7 +197,7 @@ int main() {
     cout<< tree6;  
 
     // the compared using their ASCII values
-    tree6.transform_to_min_heap();
+    tree6.myHeap();
 
     // show the tree after it transfrom to heap
     cout << tree6;
