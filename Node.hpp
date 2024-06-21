@@ -20,6 +20,10 @@ public:
         children.push_back(child);
     }
 
+    std::vector<std::shared_ptr<Node<T>>>& get_children() {
+        return children;
+    }
+
     std::string toString() const {
         return value.toString();
     }

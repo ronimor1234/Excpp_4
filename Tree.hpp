@@ -50,6 +50,10 @@ public:
         return root;
     }
 
+    void set_root(const std::shared_ptr<Node<T>>& new_root) {
+        root = new_root;
+    }
+
     // Destructor
     ~Tree() {
         destroy(root);
