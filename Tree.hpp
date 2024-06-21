@@ -18,11 +18,22 @@ class Tree {
 private:
     std::shared_ptr<Node<T>> root;
 
+    // Private helper function for destructor
+    void destroy(std::shared_ptr<Node<T>>& node) {
+        if (node) {
+            for (auto& child : node->children) {
+                destroy(child);
+            }
+            node.reset(); // This line is optional since shared_ptr will delete the object when it goes out of scope
+        }
+    }
+
     bool is_binary() const {
         return K == 2;
     }
 
 public:
+    // Constructor
     Tree() : root(nullptr) {}
 
     void add_root(const Node<T>& node) {
@@ -37,6 +48,11 @@ public:
 
     std::shared_ptr<Node<T>> get_root() const {
         return root;
+    }
+
+    // Destructor
+    ~Tree() {
+        destroy(root);
     }
 
     // BFS Iterator

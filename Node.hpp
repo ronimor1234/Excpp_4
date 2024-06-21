@@ -31,6 +31,11 @@ public:
     bool operator!=(const Node<T>& other) const {
         return !(*this == other);
     }
+
+    // Destructor
+    ~Node() {
+        children.clear(); // This line is optional since shared_ptr will delete the children
+    }
 };
 
 // Function template for converting any type to string
