@@ -27,7 +27,8 @@ private:
             node.reset(); // This line is optional since shared_ptr will delete the object when it goes out of scope
         }
     }
-
+    
+    // Check if the tree is binary
     bool is_binary() const {
         return K == 2;
     }
@@ -36,20 +37,24 @@ public:
     // Constructor
     Tree() : root(nullptr) {}
 
+    // Add root node
     void add_root(const Node<T>& node) {
         root = std::make_shared<Node<T>>(node);
     }
 
+    // Add a sub-node under a parent node
     void add_sub_node(const Node<T>& parent, Node<T>& child) {
         if (root) {
             add_sub_node_helper(root.get(), parent, child);
         }
     }
 
+    // Get the root of the tree
     std::shared_ptr<Node<T>> get_root() const {
         return root;
     }
 
+    // Set the root of the tree
     void set_root(const std::shared_ptr<Node<T>>& new_root) {
         root = new_root;
     }
@@ -61,10 +66,10 @@ public:
 
     // BFS Iterator
     class BFSIterator {
-    private:
+        private:
         std::queue<std::shared_ptr<Node<T>>> queue;
 
-    public:
+        public:
         BFSIterator(std::shared_ptr<Node<T>> root) {
             if (root) queue.push(root);
         }
@@ -90,21 +95,23 @@ public:
             return queue.front().get();
         }
     };
-
+    
+    // Begin BFS traversal
     BFSIterator begin_bfs_scan() const {
         return BFSIterator(root);
     }
 
+    // End BFS traversal
     BFSIterator end_bfs_scan() const {
         return BFSIterator(nullptr);
     }
 
     // DFS Iterator
     class DFSIterator {
-    private:
+        private:
         std::stack<std::shared_ptr<Node<T>>> stack;
 
-    public:
+        public:
         DFSIterator(std::shared_ptr<Node<T>> root) {
             if (root) stack.push(root);
         }
@@ -131,10 +138,12 @@ public:
         }
     };
 
+    // Begin DFS traversal
     DFSIterator begin_dfs_scan() const {
         return DFSIterator(root);
     }
 
+    // End DFS traversal
     DFSIterator end_dfs_scan() const {
         return DFSIterator(nullptr);
     }
@@ -183,10 +192,12 @@ public:
             }
         };
 
+    // Begin in-order traversal
     InOrderIterator begin_in_order() const {
         return InOrderIterator(root);
     }
-
+    
+    // End in-order traversal
     InOrderIterator end_in_order() const {
         return InOrderIterator(nullptr);
     }
@@ -253,11 +264,13 @@ public:
                 return stack.top().get();
             }
         };
-
+    
+    // Begin pre-order traversal
     PreOrderIterator begin_pre_order() const {
         return PreOrderIterator(root);
     }
 
+    // End pre-order traversal
     PreOrderIterator end_pre_order() const {
         return PreOrderIterator(nullptr);
     }
@@ -267,6 +280,7 @@ public:
         pre_order_traversal_impl(std::integral_constant<bool, (K == 2)>());
     }
 
+    // Template specialization for k == 2 (binary tree)
     void pre_order_traversal_impl(std::true_type) {
         std::cout << "The pre-order of the tree is:" << std::endl;
         for (auto it = begin_pre_order(); it != end_pre_order(); ++it) {
@@ -275,6 +289,7 @@ public:
         std::cout << std::endl;
     }
 
+    // Template specialization for k != 2 (non-binary tree)
     void pre_order_traversal_impl(std::false_type) {
         std::cout << "Pre-order traversal is not suitable for non-binary trees; performing DFS traversal from the root:" << std::endl;
         for (auto it = begin_dfs_scan(); it != end_dfs_scan(); ++it) {
@@ -342,10 +357,12 @@ public:
         }
     };
 
+    // Begin post-order traversal
     PostOrderIterator begin_post_order() const {
         return PostOrderIterator(root);
     }
 
+    // End post-order traversal
     PostOrderIterator end_post_order() const {
         return PostOrderIterator(nullptr);
     }
@@ -372,7 +389,7 @@ public:
         }
     }
   
-        void myHeap() {
+    void myHeap() {
         if (!root) return;
 
         // Check if the tree is binary
@@ -417,7 +434,6 @@ public:
         }
         std::cout << std::endl;
     }
-
 
     // Implement PostOrderIterator, InOrderIterator, BFSIterator, DFSIterator...
     friend std::ostream& operator<<(std::ostream& os, const Tree<T, K>& tree) {
@@ -482,7 +498,7 @@ private:
         float child_y = y + 100;
         for (auto& child : node->children) {
             if (child) {
-                 // Calculate line positions
+            // Calculate line positions
             float line_x1 = x + circle.getRadius(); // Starting from the bottom center
             float line_y1 = y + circle.getRadius() * 2;
 
@@ -502,7 +518,7 @@ private:
         }
     }
 
-     void add_sub_node_helper(Node<T>* current, const Node<T>& parent, const Node<T>& child) {
+    void add_sub_node_helper(Node<T>* current, const Node<T>& parent, const Node<T>& child) {
         if (current->value == parent.value) {
             current->add_child(std::make_shared<Node<T>>(child));
         } else {

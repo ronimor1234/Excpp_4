@@ -1,4 +1,4 @@
-// // ID: 208018028, Mail: ronimordechai70@gmail.com
+// ID: 208018028, Mail: ronimordechai70@gmail.com
 #ifndef NODE_HPP
 #define NODE_HPP
 #include <iostream>
@@ -7,31 +7,38 @@
 #include <sstream> 
 
 template <typename T>
-class Node {
+class Node { 
 public:
-    T value;
-    std::vector<std::shared_ptr<Node<T>>> children;
+    T value; // Value held by the node
+    std::vector<std::shared_ptr<Node<T>>> children; // Vector of shared pointers to child nodes
 
+    // Constructor
     Node(const T& val) : value(val) {}
 
-    T get_value() const { return value; }
+    // Get the value of the node
+    const T get_value() const { return value; } 
 
-    void add_child(std::shared_ptr<Node<T>> child) {
+    // Add a child node
+    void add_child(std::shared_ptr<Node<T>> child) { 
         children.push_back(child);
     }
 
-    std::vector<std::shared_ptr<Node<T>>>& get_children() {
+    // Get the vector of children nodes
+    const std::vector<std::shared_ptr<Node<T>>>& get_children() { 
         return children;
     }
 
+    // Convert node value to string
     std::string toString() const {
         return value.toString();
     }
 
+    // Equality operator
     bool operator==(const Node<T>& other) const {
         return value == other.value;
     }
 
+    // Inequality operator
     bool operator!=(const Node<T>& other) const {
         return !(*this == other);
     }
